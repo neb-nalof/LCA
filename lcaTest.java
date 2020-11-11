@@ -5,48 +5,59 @@ import org.junit.Test;
 public class lcaTest {
 
 	@Test
-	public void testParentChild() {
-		lca tree = new lca(); 
-        tree.root = new Node(1); 
-        tree.root.left = new Node(2); 
-        tree.root.right = new Node(3); 
-        tree.root.left.left = new Node(4); 
-        tree.root.left.right = new Node(5); 
-        tree.root.right.left = new Node(6); 
-        tree.root.right.right = new Node(7);
-        
-        assertEquals(2,tree.findLCA(2, 4));
+	public void testChildParent() {
+		lca dag = new lca();
+		Node node = new Node(1);
+		dag.root = node;
+		node = new Node(2);
+		dag.root.addNode(node);
+		node = new Node(4);
+		dag.root.get(0).addNode(node);
+		node = new Node(3);
+		dag.root.addNode(node);
+		dag.root.get(0).get(0).addNode(node);
+		node = new Node(5);
+		dag.root.get(0).addNode(node);
+		dag.root.get(1).addNode(node);
+		
+		assertEquals(2,dag.findLCA(2,4));
 	}
 	
 	@Test
 	public void testSelf() {
-		lca tree = new lca(); 
-        tree.root = new Node(1); 
-        tree.root.left = new Node(2); 
-        tree.root.right = new Node(3); 
-        tree.root.left.left = new Node(4); 
-        tree.root.left.right = new Node(5); 
-        tree.root.right.left = new Node(6); 
-        tree.root.right.right = new Node(7);
-        
-        assertEquals(2,tree.findLCA(2, 2));
+    lca dag = new lca();
+		Node node = new Node(1);
+		dag.root = node;
+		node = new Node(2);
+		dag.root.addNode(node);
+		node = new Node(4);
+		dag.root.get(0).addNode(node);
+		node = new Node(3);
+		dag.root.addNode(node);
+		dag.root.get(0).get(0).addNode(node);
+		node = new Node(5);
+		dag.root.get(0).addNode(node);
+		dag.root.get(1).addNode(node);
 		
+		assertEquals(2,dag.findLCA(2,2));
 	}
 	
 	@Test
-	public void testBothChild() {
-		lca tree = new lca(); 
-        tree.root = new Node(1); 
-        tree.root.left = new Node(2); 
-        tree.root.right = new Node(3); 
-        tree.root.left.left = new Node(4); 
-        tree.root.left.right = new Node(5); 
-        tree.root.right.left = new Node(6); 
-        tree.root.right.right = new Node(7);
-        
-        assertEquals(2,tree.findLCA(4, 5));
+	public void testChildren() {
+		lca dag = new lca();
+		Node node = new Node(1);
+		dag.root = node;
+		node = new Node(2);
+		dag.root.addNode(node);
+		node = new Node(4);
+		dag.root.get(0).addNode(node);
+		node = new Node(3);
+		dag.root.addNode(node);
+		dag.root.get(0).get(0).addNode(node);
+		node = new Node(5);
+		dag.root.get(0).addNode(node);
+		dag.root.get(1).addNode(node);
 		
+		assertEquals(2,dag.findLCA(4,5));
 	}
-	
-
 }
