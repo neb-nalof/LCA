@@ -25,7 +25,7 @@ public class lcaTest {
 	
 	@Test
 	public void testSelf() {
-		lca dag = new lca();
+    lca dag = new lca();
 		Node node = new Node(1);
 		dag.root = node;
 		node = new Node(2);
