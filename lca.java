@@ -1,25 +1,37 @@
-// Java Program for Lowest Common Ancestor in a Binary Tree 
-// A O(n) solution to find LCA of two given values n1 and n2 
 import java.util.ArrayList; 
 import java.util.List; 
   
 // A Binary Tree node 
 class Node { 
     int data; 
-    Node left, right; 
+    private ArrayList <Node> children = new ArrayList<Node>(); 
   
     Node(int value) { 
         data = value; 
-        left = right = null; 
+        children = null; 
     } 
+    
+    public Node get(int i) {
+    	return children.get(i);
+    }
+    
+    public int size() {
+    	return children.size();
+    }
+    
+    public void addNode(Node a) {
+    	ArrayList <Integer> path = new ArrayList<Integer>();
+    	if(!lca.findPath(a,data,path))
+    		children.add(a);
+    }
 } 
   
-public class BT_NoParentPtr_Solution1  
+public class lca  
 { 
   
-    Node root; 
-    private List<Integer> path1 = new ArrayList<>(); 
-    private List<Integer> path2 = new ArrayList<>(); 
+    Node root;
+    private List<Integer> path1 = new ArrayList<Integer>(); 
+    private List<Integer> path2 = new ArrayList<Integer>(); 
   
     // Finds the path from root node to given root of the tree. 
     int findLCA(int n1, int n2) { 
@@ -49,7 +61,7 @@ public class BT_NoParentPtr_Solution1
       
     // Finds the path from root node to given root of the tree, Stores the 
     // path in a vector path[], returns true if path exists otherwise false 
-    private boolean findPath(Node root, int n, List<Integer> path) 
+    static boolean findPath(Node root, int n, List<Integer> path) 
     { 
         // base case 
         if (root == null) { 
@@ -62,16 +74,12 @@ public class BT_NoParentPtr_Solution1
   
         if (root.data == n) { 
             return true; 
-        } 
-  
-        if (root.left != null && findPath(root.left, n, path)) { 
-            return true; 
-        } 
-  
-        if (root.right != null && findPath(root.right, n, path)) { 
-            return true; 
-        } 
-  
+        }
+        for(int i=0;i< root.size();i++) {
+	        if (root.get(i) != null && findPath(root.get(i), n, path)) {
+	            return true; 
+	        } 
+        }
         // If not present in subtree rooted with root, remove root from 
         // path[] and return false 
         path.remove(path.size()-1); 
@@ -79,25 +87,4 @@ public class BT_NoParentPtr_Solution1
         return false; 
     } 
   
-    // Driver code 
-    public static void main(String[] args) 
-    { 
-        BT_NoParentPtr_Solution1 tree = new BT_NoParentPtr_Solution1(); 
-        tree.root = new Node(1); 
-        tree.root.left = new Node(2); 
-        tree.root.right = new Node(3); 
-        tree.root.left.left = new Node(4); 
-        tree.root.left.right = new Node(5); 
-        tree.root.right.left = new Node(6); 
-        tree.root.right.right = new Node(7); 
-  
-        System.out.println("LCA(4, 5): " + tree.findLCA(4,5)); 
-        System.out.println("LCA(4, 6): " + tree.findLCA(4,6)); 
-        System.out.println("LCA(3, 4): " + tree.findLCA(3,4)); 
-        System.out.println("LCA(2, 4): " + tree.findLCA(2,4)); 
-      
-    } 
 } 
-// This code is contributed by Sreenivasulu Rayanki.
-
-
